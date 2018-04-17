@@ -1,9 +1,11 @@
 package com.zianderthalapps.d20diceroller;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,17 +43,8 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
-
-    /*public void createDiceTotals() {
-        for (int h = 0; h < 7; h++) {
-            diceTotals.add(0);
-        }
-    }*/
-
     Random rand = new SecureRandom();
     ArrayList<LinearLayout> diceRows = new ArrayList<LinearLayout>();
-    //ArrayList<String> diceValues = new ArrayList<String>();
-    //ArrayList<Integer> diceTotals = new ArrayList<Integer>();
     ArrayList<Integer> diceTotalsByRow = new ArrayList<Integer>(); //Will keep track of diceTotalsByRow
     ArrayList<String> diceValuesByRow = new ArrayList<String>(); //Keeps track of output string by row
     ArrayList<String> diceTypeByRow = new ArrayList<String>();
@@ -99,27 +92,41 @@ it initializes the new spinner. Adds the new row to the dice layout view. It als
         }
     }
 
-    /*Takes in a view, id (R.layout.d#_row), and a string. It then creates the dice readout row */
-    public void addDiceReadout(String type, String temp) {
-        LinearLayout diceControl = (LinearLayout) findViewById(R.id.dice_display);
-        LinearLayout diceReadoutRow = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.dice_readout, null);
-        TextView readout = (TextView) diceReadoutRow.findViewById(R.id.dice_readout);
-        TextView diceType = (TextView) diceReadoutRow.findViewById(R.id.type);
-        diceType.setText(type);
-        readout.setText(temp);
-        diceControl.addView(diceReadoutRow);
+    public void deleteRowMenu(LinearLayout row){
+        diceRows.remove(row);
+        ((ViewManager) row.getParent()).removeView(row);
+        row = null;
     }
 
-    public void reset(View view){
-        diceRows.clear();
-        LinearLayout diceView = findViewById(R.id.dice_view);
-        diceView.removeAllViews();
-        addDice(diceView);
-        ScrollView diceDisplay = findViewById(R.id.dice_display_scrollview);
-        diceDisplay.setVisibility(View.GONE);
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
     }
-    /*Rolls and records dice by rows. Calls another function to create a readout for each row*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.options_create_special:
+                callCreateSpecial();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void callCreateSpecial(){
+        Intent intent = new Intent(this, CreateSpecial.class);
+        startActivity(intent);
+    }
+    public void deleteRow(View view) {
+        LinearLayout row = (LinearLayout) view.getParent();
+        diceRows.remove(row);
+        ((ViewManager) row.getParent()).removeView(row);
+        row = null;
+    }
+
+
     public void rollDiceByRow(View view) {
         int j;
         int temp;
@@ -233,67 +240,32 @@ it initializes the new spinner. Adds the new row to the dice layout view. It als
         diceValuesByRow.clear();
         diceTypeByRow.clear();
     }
-
     public int rolld2() {
         return rand.nextInt(2) + 1;
     }
-
     public int rolld4() {
         return rand.nextInt(4) + 1;
     }
-
     public int rolld6() {
         return rand.nextInt(6) + 1;
     }
-
     public int rolld8() {
         return rand.nextInt(8) + 1;
     }
-
     public int rolld10() {
         return rand.nextInt(10) + 1;
     }
-
     public int rolld12() {
         return rand.nextInt(12) + 1;
     }
-
     public int rolld20() {
         return rand.nextInt(20) + 1;
     }
-
     public int rolld100(){
         return rand.nextInt(100) + 1;
     }
 
-    public int rollPerc() {
-        return rand.nextInt(10) + 10*(rand.nextInt(10)) + 1;
-    }
-
-
-
-    /*public int sumList(ArrayList<Integer> list) {
-        int sum = 0;
-        if (!list.isEmpty()) {
-            for (int h = 0; h < list.size(); h++) {
-                sum += list.get(h);
-            }
-        }
-        return sum;
-    }*/
-
-    public void deleteRow(View view) {
-        LinearLayout row = (LinearLayout) view.getParent();
-        diceRows.remove(row);
-        ((ViewManager) row.getParent()).removeView(row);
-        row = null;
-    }
-    public void deleteRowMenu(LinearLayout row){
-        diceRows.remove(row);
-        ((ViewManager) row.getParent()).removeView(row);
-        row = null;
-    }
-
+    /*Rolls and records dice by rows. Calls another function to create a readout for each row*/
     public void displayResultByRow() {
         LinearLayout diceController = (LinearLayout) findViewById(R.id.dice_display);
         ScrollView diceDisplayScroll = (ScrollView) findViewById(R.id.dice_display_scrollview);
@@ -367,6 +339,26 @@ it initializes the new spinner. Adds the new row to the dice layout view. It als
             diceController.setVisibility(View.GONE);
             separator.setVisibility(View.GONE);
         }
+
+    }
+    /*Takes in the type of dice and the string to be printed. It then creates the dice readout row */
+    public void addDiceReadout(String type, String temp) {
+        LinearLayout diceControl = (LinearLayout) findViewById(R.id.dice_display);
+        LinearLayout diceReadoutRow = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.dice_readout, null);
+        TextView readout = (TextView) diceReadoutRow.findViewById(R.id.dice_readout);
+        TextView diceType = (TextView) diceReadoutRow.findViewById(R.id.type);
+        diceType.setText(type);
+        readout.setText(temp);
+        diceControl.addView(diceReadoutRow);
+    }
+
+    public void reset(View view){
+        diceRows.clear();
+        LinearLayout diceView = findViewById(R.id.dice_view);
+        diceView.removeAllViews();
+        addDice(diceView);
+        ScrollView diceDisplay = findViewById(R.id.dice_display_scrollview);
+        diceDisplay.setVisibility(View.GONE);
 
     }
 }

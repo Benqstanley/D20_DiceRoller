@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
-            android:onClick="rollDiceByRow"
+            android:onClick="save"
             android:text="@string/save_special" />
 
 

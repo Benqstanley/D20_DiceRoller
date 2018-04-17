@@ -1,5 +1,6 @@
 package com.zianderthalapps.d20diceroller;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ public class CreateSpecial extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_create_special);
         addDice(null);
         //createDiceValues();
 
@@ -34,5 +35,12 @@ public class CreateSpecial extends AppCompatActivity {
         diceLayout.addView(diceRow);
        // diceRows.add(diceRow);
         registerForContextMenu(diceRow);
+    }
+    public void save(View view){
+        callMain();
+    }
+    public void callMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
