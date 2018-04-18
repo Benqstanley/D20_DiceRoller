@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="@string/name_special"/>
+        android:hint="@string/name_special"
+        android:id="@+id/name_of_collection"/>
 
     <!-- Creates the column headers -->
     <LinearLayout

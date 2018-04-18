@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateSpecial"></activity>
+        <activity android:name=".CreateSpecial" />
+        <activity android:name=".AddSpecialCollections"></activity>
     </application>
 
 </manifest>

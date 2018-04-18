@@ -6,11 +6,11 @@
     <string name="reset">Reset</string>
     <string name="create_special">Create Special</string>
     <string name="add_special">Add Special</string>
-    <string name = "save_special">Save</string>
-    <string name = "name_special">Name of Special</string>
-    <string name = "options_menu_settings">Settings</string>
-    <string name = "options_menu_add_special_row">Add Special Row</string>
-    <string name = "options_menu_create_special_collection">Create Special Collection</string>
+    <string name="save_special">Save</string>
+    <string name="name_special">Name of Special</string>
+    <string name="options_menu_settings">Settings</string>
+    <string name="options_menu_add_special_row">Add Special Row</string>
+    <string name="options_menu_create_special_collection">Create Special Collection</string>
     <string-array name="dice_array">
         <item>d2</item>
         <item>d4</item>
