@@ -25,6 +25,14 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    Random rand = new SecureRandom();
+    ArrayList<LinearLayout> diceRows = new ArrayList<LinearLayout>();
+    ArrayList<Integer> diceTotalsByRow = new ArrayList<Integer>(); //Will keep track of diceTotalsByRow
+    ArrayList<String> diceValuesByRow = new ArrayList<String>(); //Keeps track of output string by row
+    ArrayList<String> diceTypeByRow = new ArrayList<String>();
+    String value = "none";
+    View contextViewTouched = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +51,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
-    Random rand = new SecureRandom();
-    ArrayList<LinearLayout> diceRows = new ArrayList<LinearLayout>();
-    ArrayList<Integer> diceTotalsByRow = new ArrayList<Integer>(); //Will keep track of diceTotalsByRow
-    ArrayList<String> diceValuesByRow = new ArrayList<String>(); //Keeps track of output string by row
-    ArrayList<String> diceTypeByRow = new ArrayList<String>();
-    String value = "none";
-    View contextViewTouched = null;
+
 /*
 This method is called when the "Add Dice" button is clicked. It increments the number of dice rows stored in totaldice
 
@@ -111,6 +113,9 @@ it initializes the new spinner. Adds the new row to the dice layout view. It als
             case R.id.options_create_special:
                 callCreateSpecial();
                 return true;
+            case R.id.options_add_special:
+                callAddSpecial();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -119,6 +124,12 @@ it initializes the new spinner. Adds the new row to the dice layout view. It als
         Intent intent = new Intent(this, CreateSpecial.class);
         startActivity(intent);
     }
+    public void callAddSpecial(){
+        Intent intent = new Intent(this, AddSpecialCollections.class);
+        startActivity(intent);
+    }
+
+
     public void deleteRow(View view) {
         LinearLayout row = (LinearLayout) view.getParent();
         diceRows.remove(row);

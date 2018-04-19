@@ -1,14 +1,15 @@
 package com.zianderthalapps.d20diceroller;
 
+import java.io.Serializable;
+
 /**
  * Created by Ben on 4/18/2018.
  */
 
-public class DiceCollection {
+public class DiceCollection implements Serializable {
     private String diceType;
     private int numberOfDice;
     private int modifier;
-    private String toSave;
 
     public void setDiceType(String input){
         this.diceType = input;
@@ -28,13 +29,5 @@ public class DiceCollection {
     public int getModifier(){
         return this.modifier;
     }
-    public void createToSave(){
-        String saveable = "\nNew Collection\nDice Type: " + this.diceType;
-        saveable += "\nNumber of Dice: " + this.numberOfDice;
-        saveable += "\nModifier: " + this.modifier;
-        this.toSave = saveable;
-    }
-    public String getToSave(){
-        return this.toSave;
-    }
+
 }

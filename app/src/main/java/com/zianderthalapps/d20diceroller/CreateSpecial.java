@@ -14,22 +14,24 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class CreateSpecial extends AppCompatActivity {
-    String filename = "SpecialCollections";
+    String dirname = "SpecialCollections";
+    String filename;
     EditText nameView;
     ArrayList<LinearLayout> diceRows = new ArrayList<LinearLayout>();
     ArrayList<DiceCollection> collections = new ArrayList<DiceCollection>();
     Context context;
+    SpecialCollection specialCollection = new SpecialCollection();
+    File directory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_special);
         addDice(null);
         context  = getApplicationContext();
-        //createDiceValues();
-
     }
     private void setDiceSpinner(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -48,53 +50,45 @@ public class CreateSpecial extends AppCompatActivity {
         diceRows.add(diceRow);
         registerForContextMenu(diceRow);
     }
+    public void createSpecialCollection(String name){
+        createCollectionList();
+        specialCollection.setSpecialCollection(collections);
+        specialCollection.setName(name);
+    }
+    public void displayToast(CharSequence input){
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, input, duration);
+        toast.show();
+    }
 
     public void save(View view) {
         nameView = findViewById(R.id.name_of_collection);
-        String name = nameView.getText().toString();
-        filename += name;
+        filename = "SpecialCollection" + nameView.getText().toString() + ".txt";
+        directory = getDir(dirname, Context.MODE_PRIVATE);
         File file = new File(context.getFilesDir(), filename);
         if(file.exists()){
-            Context context = getApplicationContext();
-            CharSequence text = "A Collection With That Name Already Exists";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            displayToast("A Collection With That Name Already Exists");
         }else {
-            StringBuilder toStore = new StringBuilder();
-            if (!name.equals("")) {
-                toStore.append(name);
-                createCollectionList();
-                if(!collections.isEmpty()) {
-                    for (DiceCollection d : collections) {
-                        toStore.append(d.getToSave());
-                    }
-                    toStore.append("End of Collection");
+            if (!filename.equals("")) {
+                createSpecialCollection(filename);
+                if(!specialCollection.getSpecialCollection().isEmpty()) {
                     try {
-                        FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-                        outputStream.write(toStore.toString().getBytes());
+                        FileOutputStream foutputStream = new FileOutputStream(file);
+                        ObjectOutputStream outputStream = new ObjectOutputStream(foutputStream);
+                        outputStream.writeObject(specialCollection);
                         outputStream.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     callMain();
                 } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "This Collection is Empty!";
-                    int duration = Toast.LENGTH_SHORT;
+                    displayToast("This Collection is Empty!");
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
                 }
             } else {
-                Context context = getApplicationContext();
-                CharSequence text = "Enter a Name For Your Collection!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-                //Toast to tell user to enter a name
+                displayToast("Enter a Name For Your Collection!");
             }
         }
     }
@@ -115,7 +109,6 @@ public class CreateSpecial extends AppCompatActivity {
                 }else{
                     temp.setModifier(0);
                 }
-                temp.createToSave();
                 collections.add(temp);
             }
 
