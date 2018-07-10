@@ -5,8 +5,9 @@
             android:title="Delete"
             android:orderInCategory="100"
             app:showAsAction="never" />
-        <item android:id="@+id/toggle_roll"
+
+<!--        <item android:id="@+id/toggle_roll"
             android:title="Toggle Roll"
             android:orderInCategory="100"
-            app:showAsAction="never" />
+            app:showAsAction="never" />-->
     </menu>

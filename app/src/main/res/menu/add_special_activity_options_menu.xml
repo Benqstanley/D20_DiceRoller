@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--
+    <item
+        android:id="@+id/options_menu_back_to_main"
+        android:orderInCategory="100"
+        android:title="@string/create_special_activity_options_back_to_main"
+        app:showAsAction="never" />
+-->
+    <item
+        android:id="@+id/add_special_options_create_special"
+        android:orderInCategory="100"
+        android:title="@string/options_menu_create_special_collection"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/add_special_options_delete_selection"
+        android:orderInCategory="200"
+        android:title="@string/add_special_options_delete_selection"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/add_special_options_delete_everything"
+        android:orderInCategory="300"
+        android:title="@string/add_special_options_delete_everything"
+        app:showAsAction="never" />
+</menu>

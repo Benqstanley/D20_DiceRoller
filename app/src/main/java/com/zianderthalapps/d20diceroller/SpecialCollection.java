@@ -11,20 +11,33 @@ import java.util.ArrayList;
  */
 
 public class SpecialCollection implements Serializable {
-    String name;
+    String fileName;
     ArrayList<DiceCollection> specialCollection = new ArrayList<>();
+    Boolean roll = false;
+
+    public void setRoll(Boolean input){
+        this.roll = input;
+    }
+    public Boolean getRoll(){
+        return this.roll;
+    }
 
     public void setSpecialCollection(ArrayList<DiceCollection> input){
         this.specialCollection = input;
     }
+    public String getPrintName(){
+        int n = this.fileName.length();
+        return this.fileName.substring(17, n-4);
+    }
+
     public ArrayList<DiceCollection> getSpecialCollection(){
         return this.specialCollection;
     }
-    public void setName(String input){
-        this.name = input;
+    public void setFileName(String input){
+        this.fileName = input;
     }
-    public String getName(){
-        return this.name;
+    public String getFileName(){
+        return this.fileName;
     }
     public String specialCollectionDetails(){
         StringBuilder temp = new StringBuilder();

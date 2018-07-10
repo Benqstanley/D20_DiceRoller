@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">D20 Dice Roller</string>
     <string name="modifier">Mod</string>
-    <string name="add_dice">Add Dice</string>
-    <string name="roll_dice">Roll Dice</string>
-    <string name="reset">Reset</string>
+    <string name="add_dice">Add\nDice</string>
+    <string name="roll_dice">Roll\nDice</string>
+    <string name="reset">Reset\nValues</string>
     <string name="create_special">Create Special</string>
     <string name="add_special">Add Special</string>
     <string name="save_special">Save</string>
@@ -11,6 +11,11 @@
     <string name="options_menu_settings">Settings</string>
     <string name="options_menu_add_special_row">Add Special Row</string>
     <string name="options_menu_create_special_collection">Create Special Collection</string>
+    <string name = "special_collections">Special Collections</string>
+    <string name = "add_special_options_delete_selection">Delete Selection</string>
+    <string name = "add_special_options_delete_everything">Delete Everything</string>
+    <string name = "add_special_back_button">Back</string>
+    <string name = "create_special_activity_options_back_to_main">Back To Main</string>
     <string-array name="dice_array">
         <item>d2</item>
         <item>d4</item>

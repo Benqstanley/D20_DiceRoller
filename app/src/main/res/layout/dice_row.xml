@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="7">
+    android:weightSum="7"
+    android:id="@+id/collection_row">
 
         <EditText
             android:imeOptions="flagNoExtractUi"
@@ -49,7 +50,7 @@
             android:layout_weight="1"
             android:hint="@string/modifier"
             android:id="@+id/constant_input"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:textSize="14sp"/>
         <View
             android:layout_width="0dp"

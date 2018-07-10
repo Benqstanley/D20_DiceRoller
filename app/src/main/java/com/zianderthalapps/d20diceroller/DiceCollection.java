@@ -10,6 +10,22 @@ public class DiceCollection implements Serializable {
     private String diceType;
     private int numberOfDice;
     private int modifier;
+    private boolean sum = false;
+    private int tempRollTotal = 0;
+
+    public void setTempRollTotal(int input){
+        this.tempRollTotal = input;
+    }
+    public int getTempRollTotal(){
+        return this.tempRollTotal;
+    }
+
+    public void setSum(boolean input){
+        this.sum = input;
+    }
+    public Boolean getSum(){
+        return this.sum;
+    }
 
     public void setDiceType(String input){
         this.diceType = input;
@@ -29,5 +45,6 @@ public class DiceCollection implements Serializable {
     public int getModifier(){
         return this.modifier;
     }
+
 
 }

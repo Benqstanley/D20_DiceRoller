@@ -6,11 +6,10 @@
     android:background="#E8F5E9">
 
 
-    <!-- Creates the column headers -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Special Collections"
+        android:text="@string/special_collections"
         android:layout_margin="8dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"/>
@@ -62,16 +61,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="16dp"
-            android:onClick="deleteEverything"
-            android:text="Delete Everything" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="16dp"
-            android:onClick="callMain"
-            android:text="Back" />
+            android:layout_marginRight="8dp"
+            android:onClick="callMainWithUpdatedSelection"
+            android:text="Add Selection" />
+
 
 
     </LinearLayout>
