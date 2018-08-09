@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen xmlns:tools="http://schemas.android.com/tools" tools:override="true" name="design_navigation_">5dp</dimen>
+
+</resources>

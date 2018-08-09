@@ -25,16 +25,15 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AddSpecialCollections extends AppCompatActivity {
-    File[] fileList;
-    Context context;
-    File directory;
-    ArrayList<SpecialCollection> specialCollections = new ArrayList<>();
-    ArrayList<LinearLayout> specialCollectionRows = new ArrayList<>();
-    ArrayList<String> selectionToPass = new ArrayList<>();
-    ArrayList<String> selectionPassedIn = new ArrayList<>();
-    ArrayList<File> selectionFiles = new ArrayList<>();
-    ArrayList<LinearLayout> selectionRows = new ArrayList<>();
-    LinearLayout collectionLayout;
+    File[] fileList; //Holds the list of saved file names
+    Context context; //To get files directory
+    File directory; //To hold the directory where specials are saved.
+    ArrayList<SpecialCollection> specialCollections = new ArrayList<>(); //List of special collection objects from fileList. Used to print on the screen.
+    ArrayList<LinearLayout> specialCollectionRows = new ArrayList<>(); //Keep track of the rows (views) that are on screen.
+    ArrayList<String> selectionToPass = new ArrayList<>(); //The selection of specialCollectionsListForHomeScreen to send back to the main screen
+    ArrayList<String> selectionPassedIn = new ArrayList<>(); //The selection of specialCollectionsListForHomeScreen that were previously displayed in main
+    ArrayList<LinearLayout> selectionRows = new ArrayList<>(); //special collection rows that have been selected
+    LinearLayout collectionLayout; //layout to display the special collection rows in
 
     //onCreate calls populateCollectionView
     @Override
@@ -81,7 +80,7 @@ public class AddSpecialCollections extends AppCompatActivity {
         addSpecialsToIntent(intent, selectionPassedIn);
         startActivity(intent);
     }
-/*    populateCollectionView creates a list of the files saved in the app. It then calls createSpecialCollectionsList.
+/*    populateCollectionView creates a list of the files saved in the app. It then calls createSpecialCollectionsListForViewScreen.
     If no saved special collections are found a message is displayed telling the user that no special collections are saved.
     If there are saved special collections then each addCollectionRow is called for each one.*/
     public void populateCollectionView(){
@@ -97,7 +96,7 @@ public class AddSpecialCollections extends AppCompatActivity {
         }
     }
     /*The list of files is run through in a for loop. The specialCollection object is read from each file and thrown into the list
-     * specialCollections. */
+     * specialCollectionsListForHomeScreen. */
     public void createSpecialCollectionsList(){
         for(File file : fileList){
             try {
@@ -113,7 +112,7 @@ public class AddSpecialCollections extends AppCompatActivity {
         }
     }
     /*A LinearLayout is inflated so it has the format to be displayed. Then populateCollectionRow is called to fill in the details. Once the details are filled
-     * in the layout is added to collectionLayout. It's also added to specialCollectionRows for checking purposes.
+     * in the layout is added to collectionLayout. It's also added to specialCollectionRowsForViewScreen for checking purposes.
       * Each LinearLayout is registered for a context menu that allows the user to edit or delete the specialCollection*/
     public void addCollectionRow(SpecialCollection dice) {
         LinearLayout specialCollectionRow = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.special_collection_row, null);

@@ -1,5 +1,6 @@
 package com.zianderthalapps.d20diceroller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -48,6 +50,15 @@ public class CreateSpecial extends AppCompatActivity {
         if(intent.hasExtra("SPECIAL_SELECTION")){
             specialsToKeep = intent.getStringArrayListExtra("SPECIAL_SELECTION");
         }
+        EditText editName = (EditText) findViewById(R.id.name_of_collection);
+        editName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
     }
     /*Sets up the dice type spinner*/
     private void setDiceSpinner(Spinner spinner) {
@@ -64,6 +75,22 @@ public class CreateSpecial extends AppCompatActivity {
         LinearLayout diceRow = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.dice_row, null);
         Spinner spinner = diceRow.findViewById(R.id.dice_spinner);
         setDiceSpinner(spinner);
+        diceRow.findViewById(R.id.dice_input).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        diceRow.findViewById(R.id.constant_input).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
         diceLayout.addView(diceRow);
         diceRows.add(diceRow);
         registerForContextMenu(diceRow);
@@ -206,5 +233,9 @@ public class CreateSpecial extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

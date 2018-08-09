@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#E8F5E9">
+    android:background="#E8F5E9"
+    android:id="@+id/parent">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:textSize="14sp"
         android:hint="@string/name_special"
+        android:inputType="textNoSuggestions"
         android:id="@+id/name_of_collection"/>
 
     <!-- Creates the column headers -->
@@ -17,7 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="7">
+        android:weightSum="7"
+        android:clickable="true"
+        android:focusableInTouchMode="true">
 
         <TextView
             android:layout_width="0dp"
