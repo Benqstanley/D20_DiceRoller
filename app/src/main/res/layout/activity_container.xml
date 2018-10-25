@@ -7,8 +7,9 @@
     android:fitsSystemWindows="true">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/main_layout">
     <!--The frame layout where our fragment will be displayed-->
 
         <android.support.v7.widget.Toolbar
@@ -47,12 +48,21 @@
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
 
 
         </FrameLayout>
 
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="ca-app-pub-1987396634848838/1482948466">
+        </com.google.android.gms.ads.AdView>
     </LinearLayout>
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
     <android.support.design.widget.NavigationView

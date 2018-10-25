@@ -4,6 +4,7 @@
     <string name="edit">Edit</string>
     <string name="view_special_collections">View Special Collections</string>
     <string name="create_special_collections">Create Special Collections</string>
+    <string name= "edit_special_collection">Edit Special Collection</string>
     <string name="app_name">D20 Dice Roller</string>
     <string name="modifier">Mod</string>
     <string name="add_dice">Add\nDice</string>
@@ -17,22 +18,12 @@
     <string name="options_menu_add_special_row">Add Special Row</string>
     <string name="options_menu_create_special_collection">Create Special Collection</string>
     <string name="special_collections">Special Collections</string>
+    <string name="regular_collections">Regular Collections</string>
     <string name="add_special_options_delete_selection">Delete Selection</string>
     <string name="add_special_options_delete_everything">Delete Everything</string>
     <string name="add_special_back_button">Back</string>
     <string name="create_special_activity_options_back_to_main">Back To Main</string>
-    <string-array name="dice_array">
-        <item>d2</item>
-        <item>d4</item>
-        <item>d6</item>
-        <item>d8</item>
-        <item>d10</item>
-        <item>d12</item>
-        <item>d20</item>
-        <item>d100</item>
-        <item>Perc</item>
-    </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

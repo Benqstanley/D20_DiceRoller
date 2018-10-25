@@ -21,26 +21,25 @@
 
         <TextView
             android:id="@+id/type"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:maxLines="2"/>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="4dp"
             android:background="@color/colorPrimaryDark"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <TextView
             android:id="@+id/dice_readout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="none"
+            android:layout_weight="2"
             android:textSize="20sp" />
     </LinearLayout>
 </RelativeLayout>
