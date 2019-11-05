@@ -14,6 +14,13 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="@string/name_special"
+            android:inputType="textNoSuggestions"
+            android:id="@+id/name_of_collection"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +74,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="7"
             android:clickable="true"
             android:focusableInTouchMode="true">
 
@@ -109,21 +115,6 @@
                 android:layout_weight="1"
                 android:text="@string/modifier" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:textSize="16sp"
-                android:layout_weight="1"
-                android:text=" Sum" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:textSize="16sp"
-                android:layout_weight="1.25"
-                android:text="Roll" />
 
         </LinearLayout>
 
@@ -208,7 +199,7 @@
                 android:layout_marginLeft="8dp"
                 android:id="@+id/reset_screen"
                 android:layout_weight="1"
-                android:text="@string/roll_dice" />
+                android:text="@string/reset" />
 
             <Button
                 android:layout_width="0dp"
@@ -217,7 +208,7 @@
                 android:layout_marginLeft="8dp"
                 android:id="@+id/save"
                 android:layout_weight="1"
-                android:text="@string/reset" />
+                android:text="@string/save_special" />
 
         </LinearLayout>
 

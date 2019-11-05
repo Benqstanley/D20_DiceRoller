@@ -1,11 +1,10 @@
 package com.zianderthalapps.d20diceroller;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -25,34 +24,31 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+public class EditSpecialCollectionFragment extends Fragment {
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * create an instance of this fragment.
- */
-public class CreateSpecialFragment extends Fragment {
+    public EditSpecialCollectionFragment() {
+        // Required empty public constructor
+    }
     ArrayList<LinearLayout> diceRowsForSpecial = new ArrayList<>(); //An array that keeps track of the diceRows that are displayed on screen when user is creating a special Collection.
     ContainerActivity containerActivity;
     ArrayList<DiceCollection> collections = new ArrayList<DiceCollection>(); //A list that keeps track of all of the user's DiceCollections to be added to this SpecialCollection
     View viewTouched;
-    public CreateSpecialFragment() {
-        // Required empty public constructor
-    }
-    //TODO: enable grouping
+    String[] types;
     View rootView;
+    SpecialCollection toEdit;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Set the Action Bar title to represent the appropriate fragment
         containerActivity = (ContainerActivity) getActivity();
+        toEdit = containerActivity.getToEdit();
         //Create the view to be returned. Inflate it with the location_list layout
         rootView = inflater.inflate(R.layout.fragment_create_special, container, false);
-        addDice(rootView);
         Button addDiceButton = rootView.findViewById(R.id.add_dice);
         Button saveSpecialCollection = rootView.findViewById(R.id.save);
         Button resetScreenButton = rootView.findViewById(R.id.reset_screen);
+        types = getActivity().getResources().getStringArray(R.array.dice_array);
+        putOriginalOnScreen();
         addDiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +77,7 @@ public class CreateSpecialFragment extends Fragment {
         });
         return rootView;
     }
+
     /*
     This method is called when the "Add Dice" button is clicked. It increments the number of dice rows stored in totaldice
 
@@ -88,9 +85,10 @@ public class CreateSpecialFragment extends Fragment {
     it initializes the new spinner. Adds the new row to the dice layout view. It also adds the new row to the arraylist diceRows.
 
     */
-    public void addDice(View view) {
+    public LinearLayout addDice(View view) {
         LinearLayout diceLayout = (LinearLayout) view.findViewById(R.id.dice_view);
-        LinearLayout diceRow = (LinearLayout) LayoutInflater.from(containerActivity).inflate(R.layout.dice_row_create, null);
+        LinearLayout diceRow = (LinearLayout) LayoutInflater.from(containerActivity).inflate(R.layout.dice_row, null);
+        registerForContextMenu(diceRow);
         Spinner spinner = (Spinner) diceRow.findViewById(R.id.dice_spinner);
         containerActivity.setDiceSpinner(spinner);
         diceRow.findViewById(R.id.dice_input).setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -112,44 +110,70 @@ public class CreateSpecialFragment extends Fragment {
         diceLayout.addView(diceRow);
         diceRowsForSpecial.add(diceRow);
         registerForContextMenu(diceRow);
+        return diceRow;
     }
 
-    /*Called when the save button is pressed.
-     * Ensures that the SpecialCollection name isn't already used. If the fileName is available this creates a
-     * SpecialCollection with the appropriate filename by calling createSpecialCollection.
-     * That SpecialCollection is then saved as an object into an appropriate file. "SpecialCollection" + input name
-     * The user is then sent back to the MainActivity*/
+    public void addDiceCollection(DiceCollection dice){
+        LinearLayout currentRow = addDice(rootView);
+        registerForContextMenu(currentRow);
+        EditText diceInput = currentRow.findViewById(R.id.dice_input);
+        Spinner spinner = (Spinner) currentRow.findViewById(R.id.dice_spinner);
+        EditText constantInput = currentRow.findViewById(R.id.constant_input);
+        diceInput.setText(Integer.toString(dice.getNumberOfDice()));
+        spinner.setSelection(findTypeIndex(dice.getDiceType()));
+        constantInput.setText(Integer.toString(dice.getModifier()));
+    }
+    public int findTypeIndex(String type){
+        int index = -1;
+        for(int i = 0; i < types.length; i++){
+            if(type.equals(types[i])){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    public void putOriginalOnScreen(){
+        EditText name = rootView.findViewById(R.id.name_of_collection);
+        name.setText(toEdit.getPrintName());
+        ArrayList<DiceCollection> diceCollectionsFromOriginal = toEdit.getSpecialCollection();
+        for(DiceCollection dice: diceCollectionsFromOriginal){
+            addDiceCollection(dice);
+        }
+    }
+
     public void save(View view) {
         TextView nameView = view.findViewById(R.id.name_of_collection);
         String filename = "SpecialCollection" + nameView.getText().toString() + ".txt";
         //directory = getDir(dirname, Context.MODE_PRIVATE);
         File file = new File(getContext().getFilesDir(), filename);
-        if(file.exists()){
-            containerActivity.displayToast("A Collection With That Name Already Exists");
-        }else {
-            if (!filename.equals("")) {
-                SpecialCollection specialCollection = createSpecialCollection(filename);
-                if(!specialCollection.getSpecialCollection().isEmpty()) {
-                    try {
-                        FileOutputStream foutputStream = new FileOutputStream(file);
-                        ObjectOutputStream outputStream = new ObjectOutputStream(foutputStream);
-                        outputStream.writeObject(specialCollection);
-                        outputStream.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    containerActivity.displayToast("\'" + specialCollection.getPrintName() + "\'" + " successfully saved");
-                    containerActivity.setNewSpecial(true);
-                    containerActivity.setActionBarTitle(R.string.view_special_collections);
-                    containerActivity.returnFragmentManager().beginTransaction().replace(R.id.content_frame, new ViewSpecialFragment()).commit();
-                } else {
-                    containerActivity.displayToast("This Collection is Empty!");
-
-                }
-            } else {
-                containerActivity.displayToast("Enter a Name For Your Collection!");
-            }
+        if (file.exists()) {
+            file.delete();
         }
+        if (!filename.equals("")) {
+            SpecialCollection specialCollection = createSpecialCollection(filename);
+            if (!specialCollection.getSpecialCollection().isEmpty()) {
+                try {
+                    FileOutputStream foutputStream = new FileOutputStream(file);
+                    ObjectOutputStream outputStream = new ObjectOutputStream(foutputStream);
+                    outputStream.writeObject(specialCollection);
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                containerActivity.displayToast("\'" + specialCollection.getPrintName() + "\'" + " successfully saved");
+                containerActivity.setNewSpecial(true);
+                containerActivity.setActionBarTitle(R.string.view_special_collections);
+                containerActivity.returnFragmentManager().beginTransaction().replace(R.id.content_frame, new ViewSpecialFragment()).commit();
+            } else {
+                containerActivity.displayToast("This Collection is Empty!");
+
+            }
+        } else {
+            containerActivity.displayToast("Enter a Name For Your Collection!");
+        }
+
         collections.clear();
     }
 
@@ -160,8 +184,6 @@ public class CreateSpecialFragment extends Fragment {
         specialCollection.setFileName(name);
         return specialCollection;
     }
-    /*The diceRows ArrayList is looped through. If the row is not empty then its information is copied into a
-     * DiceCollection. It's then added to the ArrayList collections.*/
     public void createCollectionList(){
         for(LinearLayout r : diceRowsForSpecial){
             EditText edit = r.findViewById(R.id.dice_input);
@@ -216,7 +238,6 @@ public class CreateSpecialFragment extends Fragment {
                 return super.onContextItemSelected(item);
         }
     }
-
     public void deleteRowMenu(LinearLayout row){
         diceRowsForSpecial.remove(row);
         ((ViewManager) row.getParent()).removeView(row);

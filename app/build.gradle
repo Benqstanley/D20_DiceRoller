@@ -8,9 +8,9 @@ android {
         buildConfigField("String", "AdMob_UnitId", AdMob_UnitId)
         minSdkVersion 15
         targetSdkVersion 28
-        versionName '3.03-C'
+        versionName '3.05'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 11
+        versionCode 13
     }
     buildTypes {
         release {

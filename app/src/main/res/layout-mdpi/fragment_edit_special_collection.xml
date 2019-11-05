@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateSpecialFragment">
-
+    tools:context = ".CreateSpecialFragment">
     <LinearLayout
-        android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="#E8F5E9"
-        android:orientation="vertical">
-
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/parent">
         <EditText
-            android:id="@+id/name_of_collection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:textSize="14sp"
             android:hint="@string/name_special"
             android:inputType="textNoSuggestions"
-            android:textSize="14sp" />
+            android:id="@+id/name_of_collection"/>
 
         <!-- Creates the column headers -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="7"
             android:clickable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="horizontal">
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:layout_width="0dp"
@@ -35,14 +37,13 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1.6"
                 android:text="# of Dice" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight=".2"
-                android:text="x"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:text="x"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -50,14 +51,13 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1.75"
                 android:text="      Dice" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight=".2"
-                android:text="+"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:text="+"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -66,6 +66,19 @@
                 android:layout_weight="1"
                 android:text="@string/modifier" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:text=" Sum" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1.25"
+                android:text="Roll" />
 
         </LinearLayout>
 
@@ -77,10 +90,13 @@
             android:background="#000000" />
 
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4.5">
+            android:layout_weight="4.5"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <LinearLayout
                 android:id="@+id/dice_view"
@@ -89,7 +105,7 @@
                 android:orientation="vertical">
 
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
         <View
             android:id="@+id/separator"
@@ -101,11 +117,11 @@
             android:visibility="gone" />
 
         <ScrollView
-            android:id="@+id/dice_display_scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:id="@+id/dice_display_scrollview">
 
             <LinearLayout
                 android:id="@+id/dice_display"
@@ -129,37 +145,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_margin="4dp">
 
             <Button
-                android:id="@+id/add_dice"
                 android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_weight="1"
+                android:id="@+id/add_dice"
                 android:text="@string/add_dice" />
 
             <Button
-                android:id="@+id/reset_screen"
                 android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_weight="1"
+                android:id="@+id/reset_screen"
                 android:text="@string/reset" />
 
             <Button
-                android:id="@+id/save"
                 android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_weight="1"
+                android:id="@+id/save"
                 android:text="@string/save_special" />
 
         </LinearLayout>
 
     </LinearLayout>
+
 </FrameLayout>
